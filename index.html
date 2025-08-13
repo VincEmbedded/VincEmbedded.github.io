@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WORKOUT — 12‑Week Home Program</title>
+  <style>
+    :root{
+      --bg: #0b1020; --panel: #12172a; --ink: #e9ecf1; --muted: #aab3c4;
+      --brand: #7c5cff; --brand2: #22d3ee; --card: #0f1426; --radius: 16px; --shadow: 0 10px 25px rgba(0,0,0,.45);
+    }
+    [data-theme="light"]{ --bg:#f7f8fc; --panel:#fff; --ink:#0e1320; --muted:#475069; --brand:#5b43f7; --brand2:#0ea5e9; --card:#fff; --shadow:0 10px 25px rgba(10,10,30,.09)}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(1200px 800px at 10% -10%, rgba(124,92,255,.25), transparent 60%),radial-gradient(800px 500px at 90% -10%, rgba(34,211,238,.25), transparent 60%),var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    .container{max-width:1024px;margin:0 auto;padding:20px}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .grid{display:grid;gap:12px}
+    @media(min-width:900px){.cols-2{grid-template-columns:repeat(2,1fr)}.cols-3{grid-template-columns:repeat(3,1fr)}}
+    .pill{display:inline-flex;align-items:center;justify-content:center;min-width:34px;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;margin:4px 6px 0 0;font-size:12px;cursor:pointer;user-select:none;transition:transform .1s ease, background .2s ease, border-color .2s ease}
+    .pill:hover{transform:translateY(-1px)}
+    .pill.active{background:linear-gradient(135deg,var(--brand),var(--brand2));border-color:transparent;color:#fff}
+    .pill input{position:absolute;opacity:0;pointer-events:none}
+    .notice{border-left:4px solid var(--brand);padding:10px 12px;background:rgba(255,255,255,.05);border-radius:8px;margin:10px 0}
+    .muted{color:var(--muted)}
+
+    /* controls aligned */
+    .controls{display:grid;gap:12px}
+    @media(min-width:700px){.controls{grid-template-columns:1fr 1fr}}
+    .control{display:grid;grid-template-columns:140px 1fr;align-items:center;gap:8px}
+    .control span{color:var(--muted);font-weight:700;letter-spacing:.2px}
+    .select{appearance:none;background:var(--panel);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:var(--ink);width:100%}
+
+    h1{font-size:clamp(28px,4.2vw,44px);margin:18px 0 10px;letter-spacing:.12em;text-align:center}
+
+    /* floating theme button */
+    .fab{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+      background: conic-gradient(from 180deg at 50% 50%, var(--brand), var(--brand2));}
+    .fab:hover{filter:brightness(1.05)}
+    .fab span{font-size:20px;line-height:1}
+
+    /* exercise header with weight input */
+    .ex-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .weight{display:flex;align-items:center;gap:8px}
+    .input{appearance:none;background:var(--panel);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 10px;color:var(--ink);width:110px}
+    .suffix{opacity:.7;font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WORKOUT</h1>
+
+    <div class="card">
+      <div class="controls">
+        <label class="control"><span>Select week</span>
+          <select id="weekSel" class="select">
+            <option value="1">Week 1</option>
+            <option value="2">Week 2</option>
+            <option value="3">Week 3</option>
+            <option value="4">Week 4 (Deload)</option>
+            <option value="5">Week 5</option>
+            <option value="6">Week 6</option>
+            <option value="7">Week 7</option>
+            <option value="8">Week 8 (Deload)</option>
+            <option value="9">Week 9</option>
+            <option value="10">Week 10</option>
+            <option value="11">Week 11</option>
+            <option value="12">Week 12</option>
+          </select>
+        </label>
+        <label class="control"><span>Select day</span>
+          <select id="daySel" class="select">
+            <option value="Day 1">Day 1 – Upper Body Push</option>
+            <option value="Day 2">Day 2 – Lower Body (Squat dominant)</option>
+            <option value="Day 3">Day 3 – Upper Body Pull + Arms</option>
+            <option value="Day 4">Day 4 – Rest</option>
+            <option value="Day 5">Day 5 – Lower Body (Deadlift dominant)</option>
+            <option value="Day 6">Day 6 – Arms & Shoulders</option>
+            <option value="Day 7">Day 7 – Full Rest</option>
+          </select>
+        </label>
+      </div>
+      <div id="quickOut" style="margin-top:14px"></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3 style="margin:0 0 8px">Load & Reps In Reserve (RIR)</h3>
+      <ul style="margin:0 0 8px 18px">
+        <li>Target RIR: <strong>2</strong> (finish each set feeling like you could do ~2 more reps).</li>
+        <li>Double Progression: When you hit the <em>top</em> of the rep range in all sets at the target RIR, increase next session's load.</li>
+        <li>Upper body: +2.5 kg • Lower body: +5 kg • Dumbbells: +1–2 kg per hand (smallest possible jump).</li>
+      </ul>
+      <div class="notice" style="margin-top:10px">
+        <strong>In‑session quick adjustment:</strong>
+        <ul style="margin:8px 0 0 18px">
+          <li>Avg. RIR ≥ 5 → increase load ≈ 12–20%</li>
+          <li>Avg. RIR 4–5 → increase load ≈ 10–12%</li>
+          <li>Avg. RIR 3–4 → increase load ≈ 7–10%</li>
+          <li>Avg. RIR ≈ 2 → keep the same load</li>
+          <li>Avg. RIR 1–2 → decrease load ≈ 0–5%</li>
+          <li>Avg. RIR &lt; 1 → decrease load ≈ 5–10%</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating theme toggle -->
+  <button id="themeFab" class="fab" aria-label="Toggle theme"><span>☾</span></button>
+
+  <script>
+    // ====== Persistence helpers (localStorage) ======
+    const STATE_KEY = 'wo_state_v1';
+    const THEME_KEY = 'wo_theme_v1';
+    const SEL_KEY   = 'wo_sel_v1';
+
+    const root = document.documentElement;
+    const fab = document.getElementById('themeFab');
+
+    function loadJSON(key, fallback){
+      try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+    }
+    function saveJSON(key, value){ localStorage.setItem(key, JSON.stringify(value)); }
+
+    // ====== Theme ======
+    function setTheme(mode){
+      root.setAttribute('data-theme', mode === 'light' ? 'light' : 'dark');
+      fab.querySelector('span').textContent = mode === 'light' ? '☾' : '☀︎';
+      saveJSON(THEME_KEY, { mode });
+    }
+    (function initTheme(){
+      const saved = loadJSON(THEME_KEY, { mode: 'dark' });
+      setTheme(saved.mode);
+    })();
+    fab.addEventListener('click', ()=>{
+      const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      setTheme(current === 'light' ? 'dark' : 'light');
+    });
+
+    // ====== Data (program)
+    const days = {
+      'Day 1': { title:'Day 1 – Upper Body Push', rest:false,
+        warmup:['3–5 min easy walk/jog','Dynamic mobility: hips, ankles, shoulders'],
+        exercises:[
+          {n:'Barbell Bench Press', s:4, r:'6–8', rir:'2'},
+          {n:'Incline Dumbbell Press', s:3, r:'8–10', rir:'2'},
+          {n:'Seated Dumbbell Shoulder Press', s:3, r:'6–8', rir:'2'},
+          {n:'Dumbbell Lateral Raise', s:3, r:'12–15', rir:'2–3'},
+          {n:'Skull Crusher (Barbell or Dumbbell)', s:3, r:'10–12', rir:'2'},
+          {n:'Overhead Dumbbell Triceps Extension', s:2, r:'12–15', rir:'2–3'},
+        ],
+        cooldown:['3–5 min nasal breathing','Short stretch: chest, shoulders, triceps'],
+        notes:['Rest: compounds 90–150 s; isolation 60–90 s','Tempo: 2–3 s eccentric']
+      },
+      'Day 2': { title:'Day 2 – Lower Body (Squat dominant)', rest:false,
+        warmup:['3–5 min easy walk/jog','Dynamic: hip swings, ankle circles'],
+        exercises:[
+          {n:'MAIN: Front Squat (from the floor) or Zercher Squat or Heavy Goblet Squat', s:4, r:'5–8 (Goblet 8–12)', rir:'2'},
+          {n:'Romanian Deadlift', s:3, r:'6–8', rir:'2'},
+          {n:'Bulgarian Split Squat', s:3, r:'8–10 / leg', rir:'2'},
+          {n:'Dumbbell Hamstring Curl', s:3, r:'10–12', rir:'2–3'},
+          {n:'Standing Calf Raise', s:4, r:'10–12', rir:'1–2'},
+          {n:'Bench Leg Raise', s:3, r:'12–15', rir:'—'},
+        ],
+        cooldown:['3–5 min breathing','Stretch: hamstrings, hip flexors'],
+        notes:['Rest: big lifts 90–150 s; isolation 60–90 s']
+      },
+      'Day 3': { title:'Day 3 – Upper Body Pull + Arms', rest:false,
+        warmup:['3–5 min easy walk/jog','Shoulder circles, T‑spine opener'],
+        exercises:[
+          {n:'Barbell Row', s:4, r:'6–8', rir:'2'},
+          {n:'Chest‑Supported Dumbbell Row', s:3, r:'8–10', rir:'2'},
+          {n:'Rear Delt Dumbbell Fly', s:3, r:'12–15', rir:'2–3'},
+          {n:'Barbell Curl', s:4, r:'8–10', rir:'1–2'},
+          {n:'Incline Dumbbell Curl', s:3, r:'10–12', rir:'2'},
+          {n:'Hammer Curl', s:2, r:'12–15', rir:'2–3'},
+        ],
+        cooldown:['3–5 min breathing','Stretch: lats, biceps'],
+        notes:['Rest: back 90–120 s; arms 60–90 s','Curls: 3 s eccentric']
+      },
+      'Day 4': { title:'Day 4 – Rest', rest:true,
+        restNotes:[
+          'Full rest day: no heavy training.',
+          'Optional 5–10 min mobility (world’s greatest stretch, cat‑cow, ankle mobilization).',
+          '3–5 min relaxed nasal breathing.'
+        ]
+      },
+      'Day 5': { title:'Day 5 – Lower Body (Deadlift dominant)', rest:false,
+        warmup:['3–5 min walk/jog','Posterior chain activation'],
+        exercises:[
+          {n:'Conventional Deadlift', s:4, r:'3–5', rir:'2'},
+          {n:'Barbell Hip Thrust', s:3, r:'8–12', rir:'2'},
+          {n:'Front Squat (from the floor) or Reverse Lunge', s:3, r:'6–10', rir:'2'},
+          {n:'Standing Calf Raise', s:3, r:'12–15', rir:'1–2'},
+          {n:'Side Plank', s:3, r:'30–45 s / side', rir:'—'},
+        ],
+        cooldown:['3–5 min breathing','Stretch: hamstrings, glutes'],
+        notes:['Deadlift & hip thrust: rest 120–180 s']
+      },
+      'Day 6': { title:'Day 6 – Arms & Shoulders', rest:false,
+        warmup:['3–5 min walk/jog','Shoulder warm‑up'],
+        exercises:[
+          {n:'Close‑Grip Barbell Bench Press', s:3, r:'5–8', rir:'1–2'},
+          {n:'Seated Dumbbell Shoulder Press', s:3, r:'8–10', rir:'2'},
+          {n:'JM Press or Bench Dip', s:2, r:'10–12', rir:'2'},
+          {n:'Barbell Curl + Overhead Dumbbell Triceps Extension (Superset)', s:3, r:'10–12 (each)', rir:'2'}
+        ],
+        cooldown:['3–5 min walk','Stretch: biceps, triceps, shoulders'],
+        notes:['Rest between sets: 60–90 s']
+      },
+      'Day 7': { title:'Day 7 – Full Rest', rest:true,
+        restNotes:[
+          'Full rest day.',
+          'Optional light 5–10 min stretch or mobility.',
+          'Prioritize sleep.'
+        ]
+      }
+    };
+
+    // ====== Elements
+    const weekSel = document.getElementById('weekSel');
+    const daySel  = document.getElementById('daySel');
+
+    // restore last selection once
+    (function initSelection(){
+      const sel = loadJSON(SEL_KEY, {week: '1', day: 'Day 1'});
+      if([...weekSel.options].some(o=>o.value===sel.week)) weekSel.value = sel.week;
+      if([...daySel.options].some(o=>o.value===sel.day)) daySel.value = sel.day;
+    })();
+
+    // ====== State helpers
+    function saveSelection(){ saveJSON(SEL_KEY, {week: weekSel.value, day: daySel.value}); }
+    function getState(){ return loadJSON(STATE_KEY, {}); }
+    function setState(s){ saveJSON(STATE_KEY, s); }
+
+    function ensurePath(state, week, day){
+      if(!state[week]) state[week] = {};
+      if(!state[week][day]) state[week][day] = {};
+      if(!state[week][day].sets) state[week][day].sets = {};
+      if(!state[week][day].weights) state[week][day].weights = {};
+      return state[week][day];
+    }
+
+    function renderQuick(){
+      const week = weekSel.value;
+      const key  = daySel.value;
+      const d    = days[key];
+      const out  = document.getElementById('quickOut');
+      const isDeload = (week==='4' || week==='8');
+
+      let html = '';
+      html += `<div class=\"notice\">${isDeload?'<strong>Deload week:</strong> Reduce sets by 40–50%, loads by 10–15%. Target RIR 3–4.':'Normal loading this week.'}</div>`;
+      html += `<h3>${d.title}</h3>`;
+
+      if(d.rest){
+        html += '<div class="card"><ul>' + d.restNotes.map(x=>`<li>${x}</li>`).join('') + '</ul></div>';
+      } else {
+        html += '<h4>Warm‑up</h4><ul>'+d.warmup.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+        html += '<h4>Exercise list</h4>';
+        html += '<div class="grid cols-2">';
+
+        const state = getState();
+        const dayNode = ensurePath(state, week, key);
+        const setsState = dayNode.sets;
+        const weightsState = dayNode.weights;
+
+        d.exercises.forEach((ex, ei)=>{
+          const wVal = (weightsState && typeof weightsState[ei]!== 'undefined') ? weightsState[ei] : '';
+          html += `<div class=\"card\"><div class=\"ex-head\"><strong>${ex.n}</strong><div class=\"weight\"><input class=\"input weight-input\" data-ex=\"${ei}\" placeholder=\"e.g., 40\" value=\"${String(wVal).replace(/\"/g,'&quot;')}\"/><span class=\"suffix\">kg</span></div></div><div class=\"muted\">${ex.s} sets × ${ex.r} • Target RIR: ${ex.rir}</div><div style=\"margin-top:8px\">`;
+          for(let si=1; si<=ex.s; si++){
+            const checked = !!(setsState[ei] && setsState[ei][si]);
+            html += `<label class=\"pill ${checked?'active':''}\" data-ex=\"${ei}\" data-set=\"${si}\" aria-label=\"Set ${si}\"><input type=\"checkbox\" ${checked?'checked':''}/> ${si}</label>`;
+          }
+          html += '</div></div>';
+        });
+        html += '</div>';
+        html += '<h4>Cool‑down</h4><ul>'+d.cooldown.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+        html += '<p class="muted">'+d.notes.join(' • ')+'</p>';
+      }
+
+      out.innerHTML = html;
+      setupInteractions(week, key);
+    }
+
+    function setupInteractions(week, day){
+      const state = getState();
+      const dayNode = ensurePath(state, week, day);
+      const setsState = dayNode.sets;
+      const weightsState = dayNode.weights;
+
+      // pills toggle + save
+      document.querySelectorAll('#quickOut .pill input').forEach(inp=>{
+        const pill = inp.closest('.pill');
+        const ei = pill.getAttribute('data-ex');
+        const si = pill.getAttribute('data-set');
+        const sync = ()=> pill.classList.toggle('active', inp.checked);
+        inp.addEventListener('change', ()=>{
+          if(!setsState[ei]) setsState[ei] = {};
+          setsState[ei][si] = inp.checked;
+          setState(state);
+          sync();
+        });
+      });
+
+      // weights save
+      document.querySelectorAll('#quickOut .weight-input').forEach(inp=>{
+        const ei = inp.getAttribute('data-ex');
+        inp.addEventListener('input', ()=>{
+          weightsState[ei] = inp.value;
+          setState(state);
+        });
+      });
+    }
+
+    // ====== Listeners & initial render
+    weekSel.addEventListener('change', ()=>{ saveSelection(); renderQuick(); });
+    daySel.addEventListener('change',  ()=>{ saveSelection(); renderQuick(); });
+    renderQuick();
+
+    // ====== Minimal self‑tests (console only)
+    (function runSelfTests(){
+      try{
+        console.assert(document.getElementById('weekSel') && document.getElementById('daySel'), 'Selectors exist');
+        console.assert(document.getElementById('quickOut'), '#quickOut exists');
+        console.assert(typeof days === 'object', 'days object present');
+        const tkey='__wo_test__'; localStorage.setItem(tkey,'1'); console.assert(localStorage.getItem(tkey)==='1','localStorage ok'); localStorage.removeItem(tkey);
+        // Deload badge check
+        const pw = weekSel.value, pd = daySel.value; weekSel.value='4'; renderQuick();
+        console.assert(document.getElementById('quickOut').textContent.includes('Deload week'), 'Deload notice visible');
+        weekSel.value=pw; daySel.value=pd; renderQuick();
+      }catch(e){ console.error('SelfTests error', e); }
+    })();
+  </script>
+</body>
+</html>
