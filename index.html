@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="favicon.png">
-  <title>Weekly Program – Hypertrophy Focused</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Weekly Program – Hypertrophy Focused (Day A/B/C)</title>
   <style>
     :root { --bg:#0f1216; --card:#1a1f27; --text:#f5f7fa; --muted:#9fb0c3; --accent:#5aa9ff; --border:#2b3445; }
     @media (prefers-color-scheme: light) {
@@ -35,91 +35,178 @@
   <div class="container">
     <header>
       <div class="title">Weekly Program — Hypertrophy Focused</div>
-      <div class="subtitle">Click an exercise name to search it on YouTube • Track sets & store weights locally</div>
-    </header>
+          </header>
 
     <select id="daySelect">
-      <option value="mon">Monday · Back + Biceps A</option>
-      <option value="tue">Tuesday · Legs</option>
-      <option value="wed">Wednesday · Shoulders A</option>
-      <option value="thu">Thursday · Chest + Triceps A</option>
-      <option value="fri">Friday · Back + Biceps B</option>
-      <option value="sat">Saturday · Shoulders B</option>
-      <option value="sun">Sunday · Chest + Triceps B</option>
+      <option value="a">Day A</option>
+      <option value="b">Day B</option>
+      <option value="c">Day C</option>
     </select>
 
-    <!-- Monday -->
-    <section id="mon" class="day-card" data-day="mon">
-      <div class="day-name"><div>Monday — Back + Biceps A</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div></div>
-      <div class="ex" data-ex="Deficit Pendlay Row"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Deficit+Pendlay+Row">Deficit Pendlay Row</a></div><div class="sets">4</div><div>6–8</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Meadows Row"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Meadows+Row">Meadows Row</a></div><div class="sets">3</div><div>8–10/arm</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Chest Supported Rows"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Chest+Supported+Rows">Chest Supported Rows</a></div><div class="sets">3</div><div>10–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="EZ Bar Curl"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=EZ+Bar+Curl">EZ Bar Curl</a></div><div class="sets">4</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Hammer Curl"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Hammer+Curl">Hammer Curl</a></div><div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Strict Curl"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Strict+Curl">Strict Curl</a></div><div class="sets">2–3</div><div>6–10</div><div class="weight"></div><div class="checks"></div></div>
+    <!-- Gün A -->
+    <section id="a" class="day-card" data-day="a">
+      <div class="day-name">
+        <div>Day A</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div>
+      </div>
+
+      <div class="ex" data-ex="Barbell Squat">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Barbell+Squat">Barbell Squat</a></div>
+        <div class="sets">3</div><div>3–6</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Machine Chest Press">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Machine+Chest+Press">Machine Chest Press</a></div>
+        <div class="sets">3</div><div>6–10</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Wide-Grip Lat Pulldown">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Wide-Grip+Lat+Pulldown">Wide-Grip Lat Pulldown</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Machine Shoulder Press">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Machine+Shoulder+Press">Machine Shoulder Press</a></div>
+        <div class="sets">4</div><div>6–10</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="EZ Bar Curl">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=EZ+Bar+Curl">EZ Bar Curl</a></div>
+        <div class="sets">4</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Overhead Cable Triceps Extension">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Overhead+Cable+Triceps+Extension">Overhead Cable Triceps Extension</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Dumbbell Shrug">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Shrug">Dumbbell Shrug</a></div>
+        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Dumbbell Calf Raise">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Dumbbell+Calf+Raise">Dumbbell Calf Raise</a></div>
+        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Seated Wrist Curl">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Wrist+Curl">Seated Wrist Curl</a></div>
+        <div class="sets">2</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
+      </div>
     </section>
 
-    <!-- Tuesday -->
-    <section id="tue" class="day-card" data-day="tue">
-      <div class="day-name"><div>Tuesday — Legs</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div></div>
-      <div class="ex" data-ex="Back Squat"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Back+Squat">Back Squat</a></div><div class="sets">4</div><div>6–10</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Romanian Deadlift"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Romanian+Deadlift">Romanian Deadlift</a></div><div class="sets">4</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Bulgarian Split Squat"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Bulgarian+Split+Squat">Bulgarian Split Squat</a></div><div class="sets">3</div><div>8–12/leg</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Calf Raise"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Calf+Raise">Calf Raise</a></div><div class="sets">4</div><div>12–20</div><div class="weight"></div><div class="checks"></div></div>
+    <!-- Gün B -->
+    <section id="b" class="day-card" data-day="b">
+      <div class="day-name">
+        <div>Day B</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div>
+      </div>
+
+      <div class="ex" data-ex="Seated Cable Row">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Cable+Row">Seated Cable Row</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Incline Dumbbell Press">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Incline+Dumbbell+Press">Incline Dumbbell Press</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Bulgarian Split Squat">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Bulgarian+Split+Squat">Bulgarian Split Squat</a></div>
+        <div class="sets">3</div><div>8–12/leg</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Rope Face Pulls">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Rope+Face+Pulls">Rope Face Pulls</a></div>
+        <div class="sets">5</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Side-Lying Dumbbell Lateral Raise – Arnold Style">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Side-Lying+Dumbbell+Lateral+Raise+Arnold+Style">Arnold Style Side Lying DB Raise</a></div>
+        <div class="sets">3</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Dumbbell Preacher Curl">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Preacher+Curl">Dumbbell Preacher Curl</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Barbell Skullcrusher">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Barbell+Skullcrusher">Barbell Skullcrusher</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Dumbbell Shrug">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Shrug">Dumbbell Shrug</a></div>
+        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Dumbbell Calf Raise">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Dumbbell+Calf+Raise">Dumbbell Calf Raise</a></div>
+        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Seated Reverse Wrist Curl">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Reverse+Wrist+Curl">Seated Reverse Wrist Curl</a></div>
+        <div class="sets">2</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
+      </div>
     </section>
 
-    <!-- Wednesday -->
-    <section id="wed" class="day-card" data-day="wed">
-      <div class="day-name"><div>Wednesday — Shoulders A</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div></div>
-      <div class="ex" data-ex="Dumbbell Overhead Press"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Overhead+Press">Dumbbell Overhead Press</a></div><div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Standing Dumbbell Lateral Raise"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Standing+Dumbbell+Lateral+Raise">Standing Dumbbell Lateral Raise</a></div><div class="sets">3</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Lean-In Dumbbell Lateral Raise"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Lean-In+Dumbbell+Lateral+Raise">Lean-In Dumbbell Lateral Raise</a></div><div class="sets">2</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Arnold Style Side Lying Dumbbell Raise"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Arnold+Style+Side+Lying+Dumbbell+Raise">Arnold Style Side Lying Dumbbell Raise</a></div><div class="sets">2</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Dumbbell Shrug"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Shrug">Dumbbell Shrug</a></div><div class="sets">3</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-    </section>
+    <!-- Gün C -->
+    <section id="c" class="day-card" data-day="c">
+      <div class="day-name">
+        <div>Day C</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div>
+      </div>
 
-    <!-- Thursday -->
-    <section id="thu" class="day-card" data-day="thu">
-      <div class="day-name"><div>Thursday — Chest + Triceps A</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div></div>
-      <div class="ex" data-ex="Incline Bench Press"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Incline+Bench+Press">Incline Bench Press</a></div><div class="sets">4</div><div>6–10</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Bench Press"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Bench+Press">Bench Press</a></div><div class="sets">3</div><div>6–10</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Incline Dumbbell Press"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Incline+Dumbbell+Press">Incline Dumbbell Press</a></div><div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Flat Dumbbell Press"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Flat+Dumbbell+Press">Flat Dumbbell Press</a></div><div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Close Grip Bench Press"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Close+Grip+Bench+Press">Close Grip Bench Press</a></div><div class="sets">3–4</div><div>6–10</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Barbell Skullcrusher"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Barbell+Skullcrusher">Barbell Skullcrusher</a></div><div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-    </section>
+      <div class="ex" data-ex="Chest-Supported Dumbbell Row">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Chest-Supported+Dumbbell+Row">Chest-Supported Dumbbell Row</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
 
-    <!-- Friday -->
-    <section id="fri" class="day-card" data-day="fri">
-      <div class="day-name"><div>Friday — Back + Biceps B</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div></div>
-      <div class="ex" data-ex="1-Arm Dumbbell Row"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=1-Arm+Dumbbell+Row">1-Arm Dumbbell Row</a></div><div class="sets">4</div><div>10–12/arm</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Dumbbell Lat Pull-Over"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Lat+Pull-Over">Dumbbell Lat Pull-Over</a></div><div class="sets">3</div><div>10–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Chest Supported Rows"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Chest+Supported+Rows">Chest Supported Rows</a></div><div class="sets">2–3</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Incline Curl"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Incline+Curl">Incline Curl</a></div><div class="sets">3</div><div>10–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Standing Dumbbell Curl"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Standing+Dumbbell+Curl">Standing Dumbbell Curl</a></div><div class="sets">3</div><div>10–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Lying Dumbbell Curl"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Lying+Dumbbell+Curl">Lying Dumbbell Curl</a></div><div class="sets">2–3</div><div>10–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Modified 21s"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Modified+21s">Modified 21s</a></div><div class="sets">1</div><div>finisher</div><div class="weight"></div><div class="checks"></div></div>
-    </section>
+      <div class="ex" data-ex="Dips">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dips">Dips</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
 
-    <!-- Saturday -->
-    <section id="sat" class="day-card" data-day="sat">
-      <div class="day-name"><div>Saturday — Shoulders B</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div></div>
-      <div class="ex" data-ex="Standing Dumbbell Lateral Raise"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Standing+Dumbbell+Lateral+Raise">Standing Dumbbell Lateral Raise</a></div><div class="sets">4</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Lean-In Dumbbell Lateral Raise"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Lean-In+Dumbbell+Lateral+Raise">Lean-In Dumbbell Lateral Raise</a></div><div class="sets">3</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Arnold Style Side Lying Dumbbell Raise"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Arnold+Style+Side+Lying+Dumbbell+Raise">Arnold Style Side Lying Dumbbell Raise</a></div><div class="sets">3</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Dumbbell Overhead Press"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Overhead+Press">Dumbbell Overhead Press</a></div><div class="sets">2</div><div>10–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Dumbbell Shrug"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Shrug">Dumbbell Shrug</a></div><div class="sets">3</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-    </section>
+      <div class="ex" data-ex="Wide-Grip Cable Row">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Wide-Grip+Cable+Row">Wide-Grip Cable Row</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
 
-    <!-- Sunday -->
-    <section id="sun" class="day-card" data-day="sun">
-      <div class="day-name"><div>Sunday — Chest + Triceps B</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div></div>
-      <div class="ex" data-ex="Decline Bench Press"><div class="name"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Decline+Bench+Press">Decline Bench Press</a></div></div><div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Dumbbell Guillotine Press"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Guillotine+Press">Dumbbell Guillotine Press</a></div><div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Dumbbell Flye"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Flye">Dumbbell Flye</a></div><div class="sets">3</div><div>12–15</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Deficit Pushups"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Deficit+Pushups">Deficit Pushups</a></div><div class="sets">2</div><div>To Failure</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="One-Arm Dumbbell Overhead Extension"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=One-Arm+Dumbbell+Overhead+Extension">One-Arm Dumbbell Overhead Extension</a></div><div class="sets">3</div><div>10–12/arm</div><div class="weight"></div><div class="checks"></div></div>
-      <div class="ex" data-ex="Dumbbell Skullcrusher"><div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Skullcrusher">Dumbbell Skullcrusher</a></div><div class="sets">3</div><div>10–15</div><div class="weight"></div><div class="checks"></div></div>
+      <div class="ex" data-ex="Romanian Deadlift">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Romanian+Deadlift">Romanian Deadlift</a></div>
+        <div class="sets">2</div><div>6–10</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Walking Lunges">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Walking+Lunges">Walking Lunges</a></div>
+        <div class="sets">2</div><div>20</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Lean-In Dumbbell Lateral Raise">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Lean-In+Dumbbell+Lateral+Raise">Lean-In Dumbbell Lateral Raise</a></div>
+        <div class="sets">3</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Standing Dumbbell Curl">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Standing+Dumbbell+Curl">Standing Dumbbell Curl</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Overhead Cable Triceps Extension">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Overhead+Cable+Triceps+Extension">Overhead Cable Triceps Extension</a></div>
+        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex="Dumbbell Shrug">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Shrug">Dumbbell Shrug</a></div>
+        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
+      </div>
+
+      <div class="ex" data-ex=" Dumbbell Calf Raise">
+        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Dumbbell+Calf+Raise">Dumbbell Calf Raise</a></div>
+        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
+      </div>
     </section>
   </div>
 
