@@ -1,279 +1,143 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/png" href="favicon.png">
-  <title>Weekly Program – Hypertrophy Focused (Day A/B/C)</title>
+  <title>Workout</title>
   <style>
-    :root { --bg:#0f1216; --card:#1a1f27; --text:#f5f7fa; --muted:#9fb0c3; --accent:#5aa9ff; --border:#2b3445; }
-    @media (prefers-color-scheme: light) {
-      :root { --bg:#f7f9fc; --card:#fff; --text:#0f1216; --muted:#4b5a6a; --accent:#2563eb; --border:#e6edf5; }
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.5}
-    .container{max-width:980px;margin:40px auto;padding:0 20px 80px}
-    header{margin-bottom:24px;text-align:center}
-    .title{font-size:1.8rem;font-weight:800}
-    .subtitle{color:var(--muted);font-size:.95rem;margin-top:6px}
-    select{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin:20px auto;display:block}
-    .day-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:20px}
-    .day-name{font-weight:800;font-size:1.05rem;color:var(--accent)}
-    .colhead,.ex,.day-name{display:grid;grid-template-columns:1fr 80px 90px 130px minmax(140px,1fr);gap:12px;align-items:center;padding:8px 0}
-    .colhead{color:var(--muted);font-weight:700;font-size:.9rem;border-bottom:1px solid var(--border)}
-    .ex{border-bottom:1px dashed var(--border)}
-    .ex:last-child{border-bottom:0}
-    .name a{color:var(--text);text-decoration:none;font-weight:600}
-    .name a:hover{color:var(--accent)}
-    .weight-input{width:100%;background:transparent;border:1px solid var(--border);border-radius:10px;padding:8px 10px;color:var(--text)}
-    .weight-input::placeholder{color:var(--muted)}
-    .sets-done{display:flex;flex-wrap:wrap;gap:8px}
-    .sets-done input{width:18px;height:18px}
+    :root { --bg:#0b0d10; --panel:#111418; --fg:#e8eaed; --muted:#9aa4b2; --line:#232a31; --accent:#7dd3fc; }
+    *,*::before,*::after{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{ margin:0; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    .wrap{ max-width:1100px; margin:24px auto 48px; padding:0 16px; }
+
+    /* layout */
+    .layout{ display:grid; grid-template-columns: 300px 1fr; gap:24px; align-items:stretch; }
+    @media (max-width: 900px){ .layout{ grid-template-columns:1fr; } }
+
+    /* cards */
+    .card{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; height:100%; display:flex; flex-direction:column; }
+
+    /* timer card grid */
+    .timer-card{ display:flex; flex-direction:column; }
+    
+    .vbar-wrap{ flex:1; display:flex; align-items:stretch; margin:8px 0; }
+    .vbar { width: 72px; height: 100%; margin: 0 auto; position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: repeating-linear-gradient(to top, rgba(255,255,255,0.06) 0 1px, transparent 1px 10%); }
+    .vbar-fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0%; background: hsl(120 75% 50%); transition: height 0.12s linear, background-color 0.12s linear; }
+
+    .controls{ display:flex; flex-direction:column; min-width:0; }
+    .controls label{ color:var(--muted); font-size:12px; }
+    .controls input{ width:100%; padding:8px 10px; border:1px solid var(--line); border-radius:10px; background:#0f1317; color:var(--fg); }
+    .time-display{ text-align:center; font-variant-numeric: tabular-nums; font-size:18px; letter-spacing:1px; margin:10px 0 0; }
+    .controls-spacer{ flex:1; }
+    .btn-col{ display:grid; grid-auto-rows:min-content; gap:8px; }
+    .btn{ appearance:none; border:1px solid var(--line); background:#0f1317; color:var(--fg); padding:12px; border-radius:10px; font-size:14px; cursor:pointer; width:100%; }
+    .btn:hover{ border-color:#334151; }
+    .btn:active{ transform:translateY(1px); }
+    .btn[disabled]{ opacity:.5; cursor:not-allowed; }
+
+    /* table */
+    table{ width:100%; border-collapse:collapse; }
+    thead th{ font-size:12px; font-weight:600; color:var(--muted); border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; }
+    tbody td{ border-top:1px solid var(--line); padding:12px 12px; }
+    .ex-name{ white-space:nowrap; }
+    .reps{ color:var(--muted); font-variant-numeric: tabular-nums; }
+    .w-input{ width:110px; padding:8px 10px; border:1px solid var(--line); border-radius:10px; background:#0f1317; color:var(--fg); }
+    .w-input::placeholder{ color:#6b7280; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="title">Weekly Program — Hypertrophy Focused</div>
-          </header>
+  <main class="wrap">
+    <div class="layout">
+      <!-- LEFT: Timer (bar fills down to bottom; controls on the right) -->
+      <aside class="card timer-card" aria-label="Rest timer">
+        <div class="controls">
+          <label for="rest-seconds">Duration (sec)</label>
+          <input id="rest-seconds" type="number" min="1" step="1" placeholder="e.g. 90" />
+          <div id="timerDisplay" class="time-display">00:00</div>
+        </div>
+        <div class="vbar-wrap">
+          <div class="vbar" aria-hidden="false" role="img">
+            <div class="vbar-fill" id="vbarFill"></div>
+          </div>
+        </div>
+        <div class="btn-col">
+          <button class="btn" id="startBtn">Start</button>
+          <button class="btn" id="pauseBtn" disabled>Pause</button>
+          <button class="btn" id="resetBtn" disabled>Reset</button>
+        </div>
+      </aside>
 
-    <select id="daySelect">
-      <option value="a">Day A</option>
-      <option value="b">Day B</option>
-      <option value="c">Day C</option>
-    </select>
-
-    <!-- Gün A -->
-    <section id="a" class="day-card" data-day="a">
-      <div class="day-name">
-        <div>Day A</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div>
-      </div>
-
-      <div class="ex" data-ex="Barbell Squat">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Barbell+Squat">Barbell Squat</a></div>
-        <div class="sets">3</div><div>3–6</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Machine Chest Press">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Machine+Chest+Press">Machine Chest Press</a></div>
-        <div class="sets">3</div><div>6–10</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Wide-Grip Lat Pulldown">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Wide-Grip+Lat+Pulldown">Wide-Grip Lat Pulldown</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Machine Shoulder Press">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Machine+Shoulder+Press">Machine Shoulder Press</a></div>
-        <div class="sets">4</div><div>6–10</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="EZ Bar Curl">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=EZ+Bar+Curl">EZ Bar Curl</a></div>
-        <div class="sets">4</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Overhead Cable Triceps Extension">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Overhead+Cable+Triceps+Extension">Overhead Cable Triceps Extension</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Dumbbell Shrug">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Shrug">Dumbbell Shrug</a></div>
-        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Dumbbell Calf Raise">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Dumbbell+Calf+Raise">Dumbbell Calf Raise</a></div>
-        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Seated Wrist Curl">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Wrist+Curl">Seated Wrist Curl</a></div>
-        <div class="sets">2</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
-      </div>
-    </section>
-
-    <!-- Gün B -->
-    <section id="b" class="day-card" data-day="b">
-      <div class="day-name">
-        <div>Day B</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div>
-      </div>
-
-      <div class="ex" data-ex="Seated Cable Row">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Cable+Row">Seated Cable Row</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Incline Dumbbell Press">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Incline+Dumbbell+Press">Incline Dumbbell Press</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Bulgarian Split Squat">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Bulgarian+Split+Squat">Bulgarian Split Squat</a></div>
-        <div class="sets">3</div><div>8–12/leg</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Rope Face Pulls">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Rope+Face+Pulls">Rope Face Pulls</a></div>
-        <div class="sets">5</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Side-Lying Dumbbell Lateral Raise – Arnold Style">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Side-Lying+Dumbbell+Lateral+Raise+Arnold+Style">Arnold Style Side Lying DB Raise</a></div>
-        <div class="sets">3</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Dumbbell Preacher Curl">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Preacher+Curl">Dumbbell Preacher Curl</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Barbell Skullcrusher">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Barbell+Skullcrusher">Barbell Skullcrusher</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Dumbbell Shrug">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Shrug">Dumbbell Shrug</a></div>
-        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Dumbbell Calf Raise">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Dumbbell+Calf+Raise">Dumbbell Calf Raise</a></div>
-        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Seated Reverse Wrist Curl">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Reverse+Wrist+Curl">Seated Reverse Wrist Curl</a></div>
-        <div class="sets">2</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
-      </div>
-    </section>
-
-    <!-- Gün C -->
-    <section id="c" class="day-card" data-day="c">
-      <div class="day-name">
-        <div>Day C</div><div>Sets</div><div>Reps</div><div>Weight</div><div>Sets Done</div>
-      </div>
-
-      <div class="ex" data-ex="Chest-Supported Dumbbell Row">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Chest-Supported+Dumbbell+Row">Chest-Supported Dumbbell Row</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Dips">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dips">Dips</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Wide-Grip Cable Row">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Wide-Grip+Cable+Row">Wide-Grip Cable Row</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Romanian Deadlift">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Romanian+Deadlift">Romanian Deadlift</a></div>
-        <div class="sets">2</div><div>6–10</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Walking Lunges">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Walking+Lunges">Walking Lunges</a></div>
-        <div class="sets">2</div><div>20</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Lean-In Dumbbell Lateral Raise">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Lean-In+Dumbbell+Lateral+Raise">Lean-In Dumbbell Lateral Raise</a></div>
-        <div class="sets">3</div><div>12–20</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Standing Dumbbell Curl">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Standing+Dumbbell+Curl">Standing Dumbbell Curl</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Overhead Cable Triceps Extension">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Overhead+Cable+Triceps+Extension">Overhead Cable Triceps Extension</a></div>
-        <div class="sets">3</div><div>8–12</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex="Dumbbell Shrug">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Dumbbell+Shrug">Dumbbell Shrug</a></div>
-        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
-      </div>
-
-      <div class="ex" data-ex=" Dumbbell Calf Raise">
-        <div class="name"><a target="_blank" href="https://www.youtube.com/results?search_query=Seated+Dumbbell+Calf+Raise">Dumbbell Calf Raise</a></div>
-        <div class="sets">2</div><div>10–15</div><div class="weight"></div><div class="checks"></div>
-      </div>
-    </section>
-  </div>
+      <!-- RIGHT: Exercise table (stretches to timer height) -->
+      <section class="card" aria-label="Exercise list">
+        <table>
+          <thead>
+            <tr><th>Exercise</th><th>Reps</th><th>Weight</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="ex-name">Pendlay Row</td><td class="reps">6–8</td><td><input class="w-input" id="w-pendlay" type="number" step="0.5" min="0" placeholder="kg" data-key="pendlay" aria-label="Pendlay Row weight" /></td></tr>
+            <tr><td class="ex-name">Barbell Bench Press</td><td class="reps">6–8</td><td><input class="w-input" id="w-bench" type="number" step="0.5" min="0" placeholder="kg" data-key="bench" aria-label="Barbell Bench Press weight" /></td></tr>
+            <tr><td class="ex-name">Machine Shoulder Press</td><td class="reps">8–10</td><td><input class="w-input" id="w-shoulderpress" type="number" step="0.5" min="0" placeholder="kg" data-key="shoulderpress" aria-label="Machine Shoulder Press weight" /></td></tr>
+            <tr><td class="ex-name">Lat Pulldown</td><td class="reps">8–12</td><td><input class="w-input" id="w-latpulldown" type="number" step="0.5" min="0" placeholder="kg" data-key="latpulldown" aria-label="Lat Pulldown weight" /></td></tr>
+            <tr><td class="ex-name">Squat</td><td class="reps">6–10</td><td><input class="w-input" id="w-squat" type="number" step="0.5" min="0" placeholder="kg" data-key="squat" aria-label="Squat weight" /></td></tr>
+            <tr><td class="ex-name">Barbell Curl</td><td class="reps">10–12</td><td><input class="w-input" id="w-curl" type="number" step="0.5" min="0" placeholder="kg" data-key="curl" aria-label="Barbell Curl weight" /></td></tr>
+            <tr><td class="ex-name">Barbell Skullcrusher</td><td class="reps">8–10</td><td><input class="w-input" id="w-skull" type="number" step="0.5" min="0" placeholder="kg" data-key="skullcrusher" aria-label="Barbell Skullcrusher weight" /></td></tr>
+            <tr><td class="ex-name">Dumbbell Shrug</td><td class="reps">15–20</td><td><input class="w-input" id="w-shrug" type="number" step="0.5" min="0" placeholder="kg" data-key="shrug" aria-label="Dumbbell Shrug weight" /></td></tr>
+            <tr><td class="ex-name">Leaning Dumbbell Lateral Raise</td><td class="reps">12–15</td><td><input class="w-input" id="w-lateral" type="number" step="0.5" min="0" placeholder="kg" data-key="lateral" aria-label="Leaning Dumbbell Lateral Raise weight" /></td></tr>
+            <tr><td class="ex-name">Wrist Curl - Extension</td><td class="reps">12–15</td><td><input class="w-input" id="w-wrist" type="number" step="0.5" min="0" placeholder="kg" data-key="wrist" aria-label="Wrist weight" /></td></tr>
+            <tr><td class="ex-name">Neck Curl - Extension - Lateral</td><td class="reps">10–20</td><td><input class="w-input" id="w-neck" type="number" step="0.5" min="0" placeholder="kg" data-key="neck" aria-label="Neck weight" /></td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
 
   <script>
-    const sel = document.getElementById('daySelect');
-    const cards = Array.from(document.querySelectorAll('.day-card'));
-
-    function applyFilter(){
-      const v = sel.value;
-      cards.forEach(c=>{c.style.display = (c.dataset.day===v) ? 'block' : 'none';});
-    }
-    sel.addEventListener('change', applyFilter);
-
-    function setsCountFromText(t){
-      // Extract the largest integer from set text like "2–3" or "3-4" or "4"
-      if(!t) return 1;
-      const nums = (t+"").match(/\d+/g);
-      if(!nums) return 1;
-      return Math.max(...nums.map(n=>parseInt(n,10)));
-    }
-
-    function keyFor(exEl){
-      // Key by day + exercise name
-      const day = exEl.closest('.day-card').dataset.day;
-      const ex = exEl.getAttribute('data-ex') || exEl.querySelector('.name')?.textContent?.trim() || 'exercise';
-      return `weight:${day}:${ex}`;
-    }
-
-    function buildUI(){
-      document.querySelectorAll('.ex').forEach(ex=>{
-        // Weight input
-        const wcell = ex.querySelector('.weight');
-        if(wcell && !wcell.querySelector('input')){
-          const inp = document.createElement('input');
-          inp.type = 'text';
-          inp.className = 'weight-input';
-          inp.placeholder = 'Weight (kg/lb)';
-          // load saved
-          const k = keyFor(ex);
-          const saved = localStorage.getItem(k);
-          if(saved) inp.value = saved;
-          inp.addEventListener('input', ()=> localStorage.setItem(k, inp.value));
-          wcell.appendChild(inp);
-        }
-        // Set checkboxes
-        const ccell = ex.querySelector('.checks');
-        if(ccell && !ccell.querySelector('input')){
-          const setsText = ex.querySelector('.sets')?.textContent?.trim();
-          const count = setsCountFromText(setsText);
-          const wrap = document.createElement('div');
-          wrap.className = 'sets-done';
-          for(let i=0;i<count;i++){
-            const cb = document.createElement('input');
-            cb.type = 'checkbox';
-            wrap.appendChild(cb);
-          }
-          ccell.appendChild(wrap);
-        }
+    // Persist weights
+    (function(){
+      const prefix='wt_';
+      document.querySelectorAll('input[data-key]').forEach(inp=>{
+        const key = prefix + inp.dataset.key;
+        const saved = localStorage.getItem(key);
+        if(saved!==null) inp.value = saved;
+        inp.addEventListener('input', ()=> localStorage.setItem(key, inp.value));
       });
-    }
+    })();
 
-    // Initial render
-    applyFilter();
-    buildUI();
+    // Timer with vertical bar indicator (per-second step)
+    (function(){
+      const secondsInput = document.getElementById('rest-seconds');
+      const display = document.getElementById('timerDisplay');
+      const startBtn = document.getElementById('startBtn');
+      const pauseBtn = document.getElementById('pauseBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const fill = document.getElementById('vbarFill');
 
-    // Rebuild UI if day changes (for perf reasons, just rebuild once after filter)
-    sel.addEventListener('change', ()=> setTimeout(buildUI, 0));
+      let interval=null, target=0, remaining=0, total=0, running=false, audioCtx=null;
+
+      const mmss = (ms)=>{ ms=Math.max(0,ms|0); const t=Math.ceil(ms/1000); const m=String(Math.floor(t/60)).padStart(2,'0'); const s=String(t%60).padStart(2,'0'); return m+':'+s; };
+      const setDisplay = (ms)=> display.textContent = mmss(ms);
+      const setBar = (left)=>{
+        const secsLeft = Math.ceil(left/1000);
+        const secsTotal = Math.max(1, Math.ceil(total/1000));
+        const q = Math.max(0, Math.min(1, secsLeft / secsTotal));
+        fill.style.height = (q*100) + '%';
+        const h = Math.round(120*q); // green -> red
+        fill.style.background = `hsl(${h} 75% 50%)`;
+      };
+      const render = ()=>{ const left=Math.max(0,target-Date.now()); setDisplay(left); setBar(left); };
+
+      function tick(){ const left=target-Date.now(); if(left<=0){ stop(true); alarm(); return; } render(); }
+      function start(){ const v=parseInt(secondsInput.value,10); if(!running){ if(!remaining){ if(!v||v<=0) return; remaining=v*1000; total=remaining; setBar(remaining);} target=Date.now()+remaining; interval=setInterval(tick,1000); running=true; startBtn.disabled=true; pauseBtn.disabled=false; resetBtn.disabled=false; if(!audioCtx){ const Ctx=window.AudioContext||window.webkitAudioContext; if(Ctx) audioCtx=new Ctx(); } render(); } }
+      function pause(){ if(!running) return; clearInterval(interval); interval=null; remaining=Math.max(0,target-Date.now()); running=false; startBtn.disabled=false; pauseBtn.disabled=true; render(); }
+      function stop(done){ clearInterval(interval); interval=null; running=false; remaining=0; target=0; total=0; setDisplay(0); setBar(0); startBtn.disabled=false; pauseBtn.disabled=true; resetBtn.disabled=true; if(!done){ document.title='Workout'; } }
+      function reset(){ stop(false); }
+      function alarm(){ document.title="Time's Up!"; if(navigator.vibrate){ try{ navigator.vibrate([200,150,200]); }catch(_){} } if(audioCtx){ const now=audioCtx.currentTime; [0,0.35,0.7].forEach((t,i)=>beep(now+t,i)); } }
+      function beep(time,i){ const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='sine'; o.frequency.value=(i%2===0)?880:660; o.connect(g); g.connect(audioCtx.destination); const dur=0.2; g.gain.setValueAtTime(0.0001,time); g.gain.exponentialRampToValueAtTime(0.4,time+0.02); g.gain.exponentialRampToValueAtTime(0.0001,time+dur); o.start(time); o.stop(time+dur+0.01); }
+
+      startBtn.addEventListener('click', start); pauseBtn.addEventListener('click', pause); resetBtn.addEventListener('click', reset);
+      setDisplay(0); setBar(0);
+    })();
   </script>
 </body>
 </html>
