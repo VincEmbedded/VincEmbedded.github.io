@@ -13,7 +13,10 @@
 
     /* layout */
     .layout{ display:grid; grid-template-columns: 300px 1fr; gap:24px; align-items:stretch; }
-    @media (max-width: 900px){ .layout{ grid-template-columns:1fr; } }
+@media (max-width: 900px){
+  .vbar-wrap { min-height: clamp(180px, 35vh, 320px); }
+}
+
 
     /* cards */
     .card{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; height:100%; display:flex; flex-direction:column; }
